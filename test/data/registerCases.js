@@ -5,18 +5,28 @@ export default [
         gender: "male",
         firstName: "Victor",
         lastName: "Rico",
-        email: "victor@",
-        password: "123",
-        confirmPassword: "123"
+        email: { "data": "email@", "warningKey": "invalidEmail" }, //o warning key é verificado e mapeado pelo getWarningByKey em register.page.js
+        password: "123456",
+        confirmPassword: "123456"
     },
     {
         path: "https://demowebshop.tricentis.com/",
-        case: "Correct email",
+        case: "Empty email",
         gender: "male",
         firstName: "Victor",
         lastName: "Rico",
-        email: "victor@email.com",
-        password: "123",
-        confirmPassword: "123"
+        email: { "data": "", "warningKey": "requiredEmail" }, //o warning key é verificado e mapeado pelo getWarningByKey em register.page.js
+        password: "123456",
+        confirmPassword: "123456"
+    },
+    {
+        path: "https://demowebshop.tricentis.com/",
+        case: "ConfirmPassword <> Password",
+        gender: "male",
+        firstName: "Victor",
+        lastName: "Rico",
+        email: { "data": "email@email.com", "warningKey": "matchConfirmPassword" }, //o warning key é verificado e mapeado pelo getWarningByKey em register.page.js
+        password: "123456",
+        confirmPassword: "123457"
     }
 ];
