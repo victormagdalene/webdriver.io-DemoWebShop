@@ -8,7 +8,7 @@ class RegisterPage {
      * define selectors using getter methods
      */
     //elementos mapeados da seção de registro
-    get pageTitle() { return $('.page-title"]') }
+    get pageTitle() { return $('.page-title') }
 
     get genderMale() { return $('#gender-male') }
 

@@ -1,13 +1,14 @@
 import { browser, expect } from '@wdio/globals'
 import BasePage from '../pageobjects/base.page.js'
 import RegisterPage from '../pageobjects/register.page.js'
+import LoginPage from '../pageobjects/login.page.js';
 import Page from '../pageobjects/page.js';
-import dados from '../data/registerCases.js';
-
+import RegisterCases from '../data/registerCases.js';
+import LoginCases from '../data/loginCases.js';
 
 describe('Register link scenarios', () => {
 
-    dados.forEach((caso) => {
+    RegisterCases.forEach((caso) => {
         it(caso.case, async () => {
             await Page.open(caso.path)
 
@@ -22,16 +23,15 @@ describe('Register link scenarios', () => {
                 await RegisterPage.genderFemale.click()
             }
 
-            if (caso.firstName) await RegisterPage.firstName.setValue(caso.firstName)
+            if (caso.firstName.name) await RegisterPage.firstName.setValue(caso.firstName.name)
 
-            if (caso.lastName) await RegisterPage.lastName.setValue(caso.lastName)
+            if (caso.lastName.name) await RegisterPage.lastName.setValue(caso.lastName.name)
+        
+            if (caso.email.data) await RegisterPage.email.setValue(caso.email.data)
 
-            if (caso.email) {
-                await RegisterPage.email.setValue(caso.email.data)
-            }
-            if (caso.password) await RegisterPage.password.setValue(caso.password)
+            if (caso.password.data) await RegisterPage.password.setValue(caso.password.data)
 
-            if (caso.confirmPassword) await RegisterPage.confirmPassword.setValue(caso.confirmPassword)
+            if (caso.confirmPassword.data) await RegisterPage.confirmPassword.setValue(caso.confirmPassword.data)
 
             await RegisterPage.btnRegister.click()
 
@@ -57,7 +57,29 @@ describe('Register link scenarios', () => {
                     await expect(warningElement).toBeDisplayed()
                 }
 
-            await browser.pause(3000)
+        })
+    })
+})
+
+describe('Login link scenarios', () => {
+
+    LoginCases.forEach((caso) => {
+        it(caso.case, async () => {
+            await Page.open(caso.path)
+
+            await BasePage.loginLink.click()
+
+            await expect(LoginPage.pageTitle.isDisplayed())
+            
+            if (caso.firstName.name) await RegisterPage.firstName.setValue(caso.firstName.name)
+
+
+            //nesse trecho é feita a verificação na massa e nas mensagens de erro caso existam.
+            if (caso.email.warningKey) {
+                    const warningElement = RegisterPage.getWarningByKey(caso.email.warningKey)
+                    await expect(warningElement).toBeDisplayed()
+                }
+
 
         })
     })
